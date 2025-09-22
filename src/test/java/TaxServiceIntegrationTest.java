@@ -1,4 +1,4 @@
-import com.example.demo.TaxService;
+import com.example.demo.SimpleServer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,8 +8,8 @@ public class TaxServiceIntegrationTest {
     @Test
     public void simpleIntegrationTest(){
         System.out.println("Running simpleIntegrationTest test...");
-        TaxService taxService = new TaxService();
-        assertNotNull(taxService);
+        SimpleServer simpleServer = new SimpleServer();
+        assertNotNull(simpleServer);
     }
 
 }
