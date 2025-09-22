@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tax Calculator Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+        #chart-container {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            width: 80%;
+            max-width: 1000px;
+        }
+        canvas {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Tax Income vs Net Income</h1>
+<div id="chart-container">
+    <canvas id="taxChart"></canvas>
+</div>
+
+<script>
+
+    fetch(window.location.origin + "/tax")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const labels = data.map(p => p.beforeIncome);
+            const values = data.map(p => p.afterIncome);
+            //
+            // // Hardcoded example data (like backend would return)
+            // const data = [
+            //     { beforeIncome: 0, afterIncome: 0 },
+            //     { beforeIncome: 10000, afterIncome: 10000 },
+            //     { beforeIncome: 20000, afterIncome: 20000 },
+            //     { beforeIncome: 50000, afterIncome: 50000 },
+            //     { beforeIncome: 75000, afterIncome: 70000 },
+            //     { beforeIncome: 100000, afterIncome: 85000 },
+            //     { beforeIncome: 125000, afterIncome: 100000 },
+            //     { beforeIncome: 150000, afterIncome: 115000 },
+            //     { beforeIncome: 175000, afterIncome: 130000 },
+            //     { beforeIncome: 200000, afterIncome: 145000 }
+            // ];
+            //
+            // const labels = data.map(p => p.beforeIncome);
+            // const values = data.map(p => p.afterIncome);
+
+            const ctx = document.getElementById('taxChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'After Tax Income',
+                        data: values,
+                        borderColor: '#00c6ff',
+                        backgroundColor: 'rgba(0,198,255,0.2)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: { color: '#fff', font: { size: 14 } }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Before Income', color: '#fff' },
+                            ticks: { color: '#fff' },
+                            grid: { color: 'rgba(255,255,255,0.1)' }
+                        },
+                        y: {
+                            title: { display: true, text: 'After Income', color: '#fff' },
+                            ticks: { color: '#fff' },
+                            grid: { color: 'rgba(255,255,255,0.1)' }
+                        }
+                    }
+                }
+            });
+
+
+            console.log("labels:", labels);
+            console.log("values:", values);
+        })
+        .catch(error => {
+            console.error("Error fetching tax data:", error);
+        });
+
+
+
+</script>
+</body>
+</html>
