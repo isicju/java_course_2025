@@ -13,7 +13,6 @@ public class TaxServiceUnitTest {
 
     @Test
     public void testEmptyValue(){
-        System.out.println("Running testEmptyValue test...");
         TaxService taxService = new TaxService();
         assertEquals(0, taxService.getNetMonthlySalary(0));
     }
