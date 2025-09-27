@@ -22,7 +22,7 @@ public class SimpleServer {
         simpleServer.startServer(80);
     }
 
-    public static void stop(){
+    public void stop(){
         server.stop(0);
     }
 
@@ -46,7 +46,7 @@ public class SimpleServer {
             List<TaxPair> taxPairs =
                     Stream.iterate(0, netSalary -> netSalary + 10000)
                             .limit(15)
-                            .map(netSalary -> new TaxPair(netSalary, taxService.getNetMonthlySalary(netSalary)))
+                            .map(grossSalary -> new TaxPair(grossSalary, taxService.getNetMonthlySalary(grossSalary)))
                             .toList();
             String taxValues = (new Gson()).toJson(taxPairs);
             exchange.sendResponseHeaders(200, taxValues.length());
