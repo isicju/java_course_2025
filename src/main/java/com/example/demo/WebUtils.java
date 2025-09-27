@@ -1,7 +1,7 @@
 package com.example.demo;
 
 public class WebUtils {
-    static String HTML_TEMPLATE = """
+    public static String HTML_TEMPLATE = """
             <!DOCTYPE html>
             <html lang="en">
             <head>
