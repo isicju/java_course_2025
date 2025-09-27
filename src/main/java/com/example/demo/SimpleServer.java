@@ -19,7 +19,7 @@ public class SimpleServer {
 
     public static void main(String[] args) {
         SimpleServer simpleServer = new SimpleServer();
-        simpleServer.startServer(80);
+        simpleServer.startServer(8080);
     }
 
     public void stop(){
